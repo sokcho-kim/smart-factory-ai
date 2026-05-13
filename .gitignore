@@ -44,3 +44,5 @@ node_modules/
 *.pt
 *.onnx
 !models/README.md
+src/platform/dashboard/node_modules/
+src/platform/dashboard/.next/

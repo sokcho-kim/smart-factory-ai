@@ -13,10 +13,10 @@ services:
       - pgdata:/var/lib/postgresql/data
       - ./src/platform/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
 
-  api:
+  ai:
     build:
       context: .
-      dockerfile: src/platform/Dockerfile.api
+      dockerfile: src/ai/Dockerfile
     ports:
       - "8000:8000"
     environment:
@@ -26,14 +26,14 @@ services:
 
   dashboard:
     build:
-      context: .
-      dockerfile: src/platform/Dockerfile.dashboard
+      context: ./src/platform/dashboard
+      dockerfile: Dockerfile
     ports:
-      - "8501:8501"
+      - "3000:3000"
     environment:
-      API_URL: http://api:8000
+      NEXT_PUBLIC_AI_API_URL: http://ai:8000
     depends_on:
-      - api
+      - ai
 
 volumes:
   pgdata:
