@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: punchline
+      POSTGRES_USER: punchline
+      POSTGRES_PASSWORD: punchline123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./src/platform/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+
+  api:
+    build:
+      context: .
+      dockerfile: src/platform/Dockerfile.api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://punchline:punchline123@db:5432/punchline
+    depends_on:
+      - db
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: src/platform/Dockerfile.dashboard
+    ports:
+      - "8501:8501"
+    environment:
+      API_URL: http://api:8000
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
