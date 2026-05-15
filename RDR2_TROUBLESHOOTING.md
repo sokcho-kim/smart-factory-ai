@@ -40,6 +40,7 @@
 | Social Club CEF 브라우저 캐시 정리 | ❌ | `Documents\Rockstar Games\Social Club\` 전체 백업, 재생성 |
 | Win8 호환성 모드 적용 | ❌ | Launcher가 "Windows 7/8 지원 종료" 다이얼로그로 실행 거부 |
 | PCA(Program Compatibility Assistant) Store 정리 | ❌ | HKCU의 RDR2/Launcher 항목 모두 제거 |
+| **Defender 폴더 예외 (RDR2 + Rockstar Games 폴더)** | ❌ | 사용자가 Windows Security UI로 추가. 그래도 `MpOav.dll`은 여전히 Launcher 프로세스에 인젝트됨 — 폴더 예외는 in-process 스캐닝 모듈 인젝션을 막지 못함을 확인 |
 
 ## 분석으로 원인 후보에서 제외된 것
 
@@ -56,8 +57,8 @@
 
 | 시도 | 위험도 | 예상 효과 | 비고 |
 |---|---|---|---|
-| **Defender 폴더 예외 추가** | 낮음 | **매우 높음** | 모듈 스냅샷에서 `MpOav.dll` (Defender)이 Launcher에 인젝트되어 있음을 확인. CEF 앱과 충돌 보고 다수. Windows Security 앱에서 추가 가능 |
-| Defender 실시간 보호 일시 비활성화 | 낮음 (몇 분) | 높음 | 위가 안 되면 검증용 |
+| **Defender 프로세스 예외 (Launcher.exe / PlayRDR2.exe / RDR2.exe)** | 낮음 | **매우 높음** | 폴더 예외가 실패한 후의 다음 단계. 프로세스 예외는 Defender의 in-process 스캐닝 모듈(`MpOav.dll`) 인젝션을 막을 가능성이 있음 |
+| **Defender 실시간 보호 일시 OFF로 검증** | 낮음 (몇 분) | **결정적** | Defender가 원인인지 한 번에 확인. 작동하면 원인 확정 → 영구 예외 방법 찾기. 작동 안하면 Defender 아님 |
 | Hyper-V/WSL 비활성화 + 재부팅 | 중간 | 중간 | VBS가 현재 running. V8 JIT 호환성 가설. WSL 사용 못함 |
 | Windows 안전 모드(네트워킹) 부팅 | 낮음 | 진단용 — 결정적 | 외부/내부 판별 결정타 |
 | Rockstar 공식 사이트 standalone 설치 | 낮음 | 중간 | Steam이 깐 버전이 아닌 최신 launcher 직접 설치 |
@@ -66,11 +67,13 @@
 
 ## 다음 권장 순서
 
-1. ⏭ **Defender 폴더 예외 추가** (5분, 가장 유망)
-2. ⏭ **위가 실패하면 Hyper-V/WSL 비활성화 + 재부팅** (10분)
-3. ⏭ **위가 실패하면 안전 모드(네트워킹)에서 게임 실행 시도** — 외부/내부 결정타
-4. ⏭ **안전 모드에서도 실패하면 in-place repair install** — Windows 설정에서 가능
-5. ⏭ 그래도 안 되면 Windows 클린 설치
+1. ✅ ~~Defender **폴더** 예외 추가~~ — 실패 확인 (MpOav.dll 여전히 인젝트됨)
+2. ⏭ **Defender 실시간 보호 일시 OFF로 검증** (5분, 결정적 검증)
+3. ⏭ 또는 **Defender 프로세스 예외 추가** (5분)
+4. ⏭ 위가 실패하면 Hyper-V/WSL 비활성화 + 재부팅 (10분)
+5. ⏭ 위가 실패하면 안전 모드(네트워킹)에서 게임 실행 시도 — 외부/내부 결정타
+6. ⏭ 그래도 안 되면 in-place repair install
+7. ⏭ 마지막 수단: Windows 클린 설치
 
 ## 세션 중 발생한 시스템 변경 사항 (이 추적 문서로 관리)
 
