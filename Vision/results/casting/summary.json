@@ -1,0 +1,17 @@
+{
+  "attempt1": {
+    "config": {
+      "run_name": "attempt1_baseline",
+      "imgsz": 224,
+      "epochs": 30,
+      "lr0": 0.001,
+      "weight_decay": 0.0005
+    },
+    "result": {
+      "top1": 1.0,
+      "top5": 1.0,
+      "fitness": 1.0,
+      "best_weights": "C:\\Solo\\smart-factory-ai\\Vision\\results\\casting\\attempt1_baseline\\weights\\best.pt"
+    }
+  }
+}

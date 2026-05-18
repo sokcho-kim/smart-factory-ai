@@ -1,0 +1,60 @@
+{
+  "attempt1": {
+    "config": {
+      "run_name": "attempt1_baseline",
+      "imgsz": 224,
+      "epochs": 40,
+      "lr0": 0.001,
+      "weight_decay": 0.0005
+    },
+    "result": {
+      "top1": 1.0,
+      "top5": 1.0,
+      "fitness": 1.0,
+      "best_weights": "C:\\Solo\\smart-factory-ai\\Vision\\results\\neu\\attempt1_baseline\\weights\\best.pt"
+    }
+  },
+  "attempt2": {
+    "config": {
+      "run_name": "attempt2_strong_aug",
+      "imgsz": 320,
+      "epochs": 60,
+      "lr0": 0.001,
+      "weight_decay": 0.0005,
+      "mixup": 0.15,
+      "degrees": 25.0,
+      "hsv_v": 0.5,
+      "erasing": 0.4,
+      "translate": 0.2,
+      "scale": 0.7
+    },
+    "result": {
+      "top1": 1.0,
+      "top5": 1.0,
+      "fitness": 1.0,
+      "best_weights": "C:\\Solo\\smart-factory-ai\\Vision\\results\\neu\\attempt2_strong_aug\\weights\\best.pt"
+    }
+  },
+  "attempt3": {
+    "config": {
+      "run_name": "attempt3_strong_aug_smooth",
+      "imgsz": 320,
+      "epochs": 80,
+      "lr0": 0.0005,
+      "weight_decay": 0.001,
+      "mixup": 0.2,
+      "degrees": 30.0,
+      "hsv_v": 0.5,
+      "erasing": 0.4,
+      "translate": 0.2,
+      "scale": 0.7,
+      "label_smoothing": 0.1
+    },
+    "result": {
+      "top1": 1.0,
+      "top5": 1.0,
+      "fitness": 1.0,
+      "best_weights": "C:\\Solo\\smart-factory-ai\\Vision\\results\\neu\\attempt3_strong_aug_smooth\\weights\\best.pt"
+    }
+  }
+}

@@ -27,6 +27,9 @@ data/processed/*.parquet
 .vscode/
 .idea/
 
+# Claude Code 내부 작업공간 (worktrees, projects 메타데이터)
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
@@ -44,3 +47,15 @@ node_modules/
 *.pt
 *.onnx
 !models/README.md
+
+# Vision — 대용량 데이터셋 (재현 방법은 docs/progress/*.md 참조)
+Vision/data/
+
+# Vision — Ultralytics 자동 다운로드 부산물 (Vision 루트의 stray pt)
+Vision/yolo*.pt
+
+# Vision — 학습 중간 산출물 (last.pt는 best.pt만 있으면 불필요)
+Vision/results/**/weights/last.pt
+
+# Vision — 학습된 best.pt는 git에 보존 (전역 *.pt 규칙 무력화)
+!Vision/results/**/weights/best.pt
